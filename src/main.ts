@@ -37,22 +37,41 @@ const light = new HemisphericLight("light", new Vector3(0, 1, 0), scene);
 
 light.intensity = 0.7;
 
-const sphere = MeshBuilder.CreateSphere("sphere", {diameter: 2, segments: 32}, scene);
+{
+  const sphere = MeshBuilder.CreateSphere("sphere", {diameter: 2, segments: 32}, scene);
 
-sphere.position.y = 1;
+  sphere.position.y = 1;
+  
+  const sphereMaterial = new PBRMaterial("sphereMaterial", scene);
+  sphereMaterial.albedoColor = new Color3(1, 0, 1);
+  sphereMaterial.metallic=0.2;
+  sphereMaterial.roughness=0.3;
+  
+  const blackandwhite=(sphereMaterial as any).blackandwhite as BlackAndWhitePluginMaterial;
+  blackandwhite.isEnabled=true;
+  sphere.material=sphereMaterial;
+  
+}
+{
+  const sphere2 = MeshBuilder.CreateSphere("sphere2", {diameter: 2, segments: 32}, scene);
+  sphere2.position.x = 2;
 
-const sphereMaterial = new PBRMaterial("sphereMaterial", scene);
-sphereMaterial.albedoColor = new Color3(1, 0, 1);
-sphereMaterial.metallic=0.2;
-sphereMaterial.roughness=0.3;
+  sphere2.position.y = 1;
+  
+  const sphereMaterial2 = new PBRMaterial("sphereMaterial2", scene);
+  sphereMaterial2.albedoColor = new Color3(1, 0, 1);
+  sphereMaterial2.metallic=0.2;
+  sphereMaterial2.roughness=0.3;
+  
+  // const blackandwhite=(sphereMaterial2 as any).blackandwhite as BlackAndWhitePluginMaterial;
+  // blackandwhite.isEnabled=true;
+  sphere2.material=sphereMaterial2;
+  
+}
 
-const blackandwhite=(sphereMaterial as any).blackandwhite as BlackAndWhitePluginMaterial;
-blackandwhite.isEnabled=true;
 
 
 
-
-sphere.material=sphereMaterial;
 
 
 
