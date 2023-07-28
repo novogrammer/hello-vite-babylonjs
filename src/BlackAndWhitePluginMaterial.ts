@@ -2,14 +2,27 @@
  * Extend from MaterialPluginBase to create your plugin.
  */
 export default class BlackAndWhitePluginMaterial extends BABYLON.MaterialPluginBase {
+  _isEnabled:boolean = false;
+
   constructor(material:BABYLON.Material) {
     // the second parameter is the name of this plugin.
     // the third one is a priority, which lets you define the order multiple plugins are run. Lower numbers run first.
     // the fourth one is a list of defines used in the shader code.
     super(material, "BlackAndWhite", 200, { BLACKANDWHITE: false });
 
-    // let's enable it by default
-    this._enable(true);
+  }
+  get isEnabled() {
+    return this._isEnabled;
+  }
+
+  set isEnabled(enabled) {
+    if (this._isEnabled === enabled) {
+      return;
+    }
+    this._isEnabled = enabled;
+    // when it's changed, we need to mark the material as dirty so the shader is rebuilt.
+    this.markAllDefinesAsDirty();
+    this._enable(this._isEnabled);
   }
 
   // Also, you should always associate a define with your plugin because the list of defines (and their values)

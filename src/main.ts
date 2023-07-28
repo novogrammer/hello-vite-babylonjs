@@ -46,6 +46,9 @@ sphereMaterial.albedoColor = new Color3(1, 0, 1);
 sphereMaterial.metallic=0.2;
 sphereMaterial.roughness=0.3;
 
+const blackandwhite=(sphereMaterial as any).blackandwhite as BlackAndWhitePluginMaterial;
+blackandwhite.isEnabled=true;
+
 
 
 
