@@ -3,10 +3,18 @@ import './style.css'
 
 import { Engine, Scene, ArcRotateCamera, Vector3, HemisphericLight, MeshBuilder, Color3,  PBRMaterial } from 'babylonjs';
 
+import BlackAndWhitePluginMaterial from "./BlackAndWhitePluginMaterial.ts";
+
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   <canvas id="renderCanvas">Hello!</canvas>
 `
+
+BABYLON.RegisterMaterialPlugin("BlackAndWhite", (material) => {
+  (material as any).blackandwhite = new BlackAndWhitePluginMaterial(material);
+  return (material as any).blackandwhite;
+});
+
 
 const canvas = document.getElementById("renderCanvas") as HTMLCanvasElement;
 
@@ -37,6 +45,9 @@ const sphereMaterial = new PBRMaterial("sphereMaterial", scene);
 sphereMaterial.albedoColor = new Color3(1, 0, 1);
 sphereMaterial.metallic=0.2;
 sphereMaterial.roughness=0.3;
+
+
+
 
 sphere.material=sphereMaterial;
 
