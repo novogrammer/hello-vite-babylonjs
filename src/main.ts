@@ -11,8 +11,8 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
 `
 
 BABYLON.RegisterMaterialPlugin("BlackAndWhite", (material) => {
-  (material as any).blackandwhite = new BlackAndWhitePluginMaterial(material);
-  return (material as any).blackandwhite;
+  new BlackAndWhitePluginMaterial(material);
+  return null;
 });
 
 
@@ -47,8 +47,10 @@ light.intensity = 0.7;
   sphereMaterial.metallic=0.2;
   sphereMaterial.roughness=0.3;
   
-  const blackandwhite=(sphereMaterial as any).blackandwhite as BlackAndWhitePluginMaterial;
-  blackandwhite.isEnabled=true;
+  const blackandwhite=sphereMaterial.pluginManager?.getPlugin("BlackAndWhite");
+  if(blackandwhite && blackandwhite instanceof BlackAndWhitePluginMaterial){
+    blackandwhite.isEnabled=true;
+  }
   sphere.material=sphereMaterial;
   
 }
@@ -63,8 +65,6 @@ light.intensity = 0.7;
   sphereMaterial2.metallic=0.2;
   sphereMaterial2.roughness=0.3;
   
-  // const blackandwhite=(sphereMaterial2 as any).blackandwhite as BlackAndWhitePluginMaterial;
-  // blackandwhite.isEnabled=true;
   sphere2.material=sphereMaterial2;
   
 }
