@@ -4,6 +4,7 @@ import WavingVertexPluginMaterial from './WavingVertexPluginMaterial';
 import './style.css'
 
 import * as BABYLON from "babylonjs";
+import 'babylonjs-loaders';
 
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
@@ -100,12 +101,37 @@ light.intensity = 0.7;
   }
   
   sphere3.material=sphereMaterial3;
-  sphere3.material.onCompiled=(effect:BABYLON.Effect)=>{
-    console.log("sphere3.material.onCompiled");
-    console.log(effect._vertexSourceCode);
-    console.log(effect._fragmentSourceCode);
-  }
+  // sphere3.material.onCompiled=(effect:BABYLON.Effect)=>{
+  //   console.log("sphere3.material.onCompiled");
+  //   console.log(effect._vertexSourceCode);
+  //   console.log(effect._fragmentSourceCode);
+  // }
   
+}
+{
+  BABYLON.SceneLoader.ImportMesh("","./assets/models/","weight.glb",scene,(meshes:BABYLON.AbstractMesh[])=>{
+    console.log(meshes);
+    // const rootMesh=meshes[0];
+    const weightMesh=meshes[1];
+    weightMesh.isVisible=false;
+    weightMesh.parent=null;
+    
+    if(!(weightMesh instanceof BABYLON.Mesh)){
+      throw new Error("weightMesh is not Mesh");
+    }
+    for (let index = 0; index < 100; index++) {
+      var newInstance = weightMesh.createInstance("i" + index);
+      // Here you could change the properties of your individual instance,
+      // for example to form a diagonal line of instances:
+      newInstance.position.x = (index%10);
+      newInstance.position.y=index*0.1+2;
+      newInstance.position.z = Math.floor(index/10);
+      // See below for more details on what can be changed.
+    }    
+    // meshes[1].parent=null;
+
+  });
+
 }
 
 
