@@ -1,5 +1,6 @@
 
 import BlackAndWhitePluginMaterial from './BlackAndWhitePluginMaterial';
+import WavingVertexPluginMaterial from './WavingVertexPluginMaterial';
 import './style.css'
 
 import * as BABYLON from "babylonjs";
@@ -13,6 +14,12 @@ BABYLON.RegisterMaterialPlugin("BlackAndWhite", (material) => {
   new BlackAndWhitePluginMaterial(material);
   return null;
 });
+BABYLON.RegisterMaterialPlugin("WavingVertex", (material) => {
+  new WavingVertexPluginMaterial(material);
+  return null;
+});
+
+
 
 
 const canvas = document.getElementById("renderCanvas") as HTMLCanvasElement;
@@ -37,24 +44,21 @@ const light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 1, 0)
 light.intensity = 0.7;
 
 {
-  const sphere = BABYLON.MeshBuilder.CreateSphere("sphere", {diameter: 2, segments: 32}, scene);
+  const sphere1 = BABYLON.MeshBuilder.CreateSphere("sphere1", {diameter: 2, segments: 32}, scene);
 
-  sphere.position.y = 1;
+  sphere1.position.y = 1;
   
-  const sphereMaterial = new BABYLON.PBRMaterial("sphereMaterial", scene);
-  sphereMaterial.albedoColor = new BABYLON.Color3(1, 0, 1);
-  sphereMaterial.metallic=0.2;
-  sphereMaterial.roughness=0.3;
+  const sphereMaterial1 = new BABYLON.PBRMaterial("sphereMaterial", scene);
+  sphereMaterial1.albedoColor = new BABYLON.Color3(1, 0, 1);
+  sphereMaterial1.metallic=0.2;
+  sphereMaterial1.roughness=0.3;
   
-  const blackandwhite=sphereMaterial.pluginManager?.getPlugin("BlackAndWhite");
-  if(blackandwhite && blackandwhite instanceof BlackAndWhitePluginMaterial){
-    blackandwhite.isEnabled=true;
-  }
-  sphere.material=sphereMaterial;
-  sphere.material.onCompiled=(effect:BABYLON.Effect)=>{
-    console.log(effect._vertexSourceCode);
-    console.log(effect._fragmentSourceCode);
-  }
+  sphere1.material=sphereMaterial1;
+  // sphere1.material.onCompiled=(effect:BABYLON.Effect)=>{
+  //   console.log("sphere1.material.onCompiled");
+  //   console.log(effect._vertexSourceCode);
+  //   console.log(effect._fragmentSourceCode);
+  // }
   
 }
 {
@@ -67,14 +71,42 @@ light.intensity = 0.7;
   sphereMaterial2.albedoColor = new BABYLON.Color3(1, 0, 1);
   sphereMaterial2.metallic=0.2;
   sphereMaterial2.roughness=0.3;
+  const blackandwhite=sphereMaterial2.pluginManager?.getPlugin("BlackAndWhite");
+  if(blackandwhite && blackandwhite instanceof BlackAndWhitePluginMaterial){
+    blackandwhite.isEnabled=true;
+  }
   
   sphere2.material=sphereMaterial2;
+  // sphere2.material.onCompiled=(effect:BABYLON.Effect)=>{
+  //   console.log("sphere2.material.onCompiled");
+  //   console.log(effect._vertexSourceCode);
+  //   console.log(effect._fragmentSourceCode);
+  // }
   
 }
+{
+  const sphere3 = BABYLON.MeshBuilder.CreateSphere("sphere3", {diameter: 2, segments: 32}, scene);
+  sphere3.position.x = -2;
 
-
-
-
+  sphere3.position.y = 1;
+  
+  const sphereMaterial3 = new BABYLON.PBRMaterial("sphereMaterial3", scene);
+  sphereMaterial3.albedoColor = new BABYLON.Color3(1, 0, 1);
+  sphereMaterial3.metallic=0.2;
+  sphereMaterial3.roughness=0.3;
+  const wavingVertex=sphereMaterial3.pluginManager?.getPlugin("WavingVertex");
+  if(wavingVertex && wavingVertex instanceof WavingVertexPluginMaterial){
+    wavingVertex.isEnabled=true;
+  }
+  
+  sphere3.material=sphereMaterial3;
+  sphere3.material.onCompiled=(effect:BABYLON.Effect)=>{
+    console.log("sphere3.material.onCompiled");
+    console.log(effect._vertexSourceCode);
+    console.log(effect._fragmentSourceCode);
+  }
+  
+}
 
 
 
