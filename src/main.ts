@@ -109,12 +109,15 @@ light.intensity = 0.7;
   
 }
 {
+  // weight.babylonの方がいいかも
   BABYLON.SceneLoader.ImportMesh("","./assets/models/","weight.glb",scene,(meshes:BABYLON.AbstractMesh[])=>{
-    console.log(meshes);
-    // const rootMesh=meshes[0];
+    // console.log(meshes);
+    const rootMesh=meshes[0];
+    // rootMesh.rotationQuaternion = BABYLON.Quaternion.RotationAxis(BABYLON.Axis.X, BABYLON.Tools.ToRadians(90));
     const weightMesh=meshes[1];
+
     weightMesh.isVisible=false;
-    weightMesh.parent=null;
+    // weightMesh.parent=null;
     
     if(!(weightMesh instanceof BABYLON.Mesh)){
       throw new Error("weightMesh is not Mesh");
@@ -126,6 +129,7 @@ light.intensity = 0.7;
       newInstance.position.x = (index%10);
       newInstance.position.y=index*0.1+2;
       newInstance.position.z = Math.floor(index/10);
+      newInstance.parent=rootMesh;
       // See below for more details on what can be changed.
     }    
     // meshes[1].parent=null;
