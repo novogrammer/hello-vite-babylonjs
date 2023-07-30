@@ -1,7 +1,7 @@
 
 import './style.css'
 
-import { Engine, Scene, ArcRotateCamera, Vector3, HemisphericLight, MeshBuilder, Color3,  PBRMaterial } from 'babylonjs';
+import { Engine, Scene, ArcRotateCamera, Vector3, HemisphericLight, MeshBuilder, Color3,  PBRMaterial, Effect } from 'babylonjs';
 
 import BlackAndWhitePluginMaterial from "./BlackAndWhitePluginMaterial.ts";
 
@@ -52,6 +52,10 @@ light.intensity = 0.7;
     blackandwhite.isEnabled=true;
   }
   sphere.material=sphereMaterial;
+  sphere.material.onCompiled=(effect:Effect)=>{
+    console.log(effect._vertexSourceCode);
+    console.log(effect._fragmentSourceCode);
+  }
   
 }
 {
