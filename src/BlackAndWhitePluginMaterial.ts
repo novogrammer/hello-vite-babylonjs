@@ -1,3 +1,5 @@
+import * as BABYLON from "babylonjs";
+
 /**
  * Extend from MaterialPluginBase to create your plugin.
  */
